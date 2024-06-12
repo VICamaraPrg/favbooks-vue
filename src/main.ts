@@ -1,4 +1,5 @@
 import './assets/main.css'
+import piniaPluginPersistedState from 'pinia-plugin-persistedstate'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -7,6 +8,6 @@ import App from './App.vue'
 
 const app = createApp(App)
 
-app.use(createPinia())
+app.use(createPinia().use(piniaPluginPersistedState))
 
 app.mount('#app')
