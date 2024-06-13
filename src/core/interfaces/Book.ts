@@ -1,5 +1,8 @@
 export interface Book {
-  title: string
-  author: string
-  isFav: boolean
+  id: number;
+  title: string;
+  author: string;
+  isFav: boolean;
+  genre?: string;
+  year?: number;
 }
