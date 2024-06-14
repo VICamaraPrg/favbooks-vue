@@ -102,6 +102,7 @@ const route = useRoute();
 const currentRoute = route.path;
 
 // Pls dont kill me for this :D
+// You're already dead >(
 const totalPages = computed(() => {
   return currentRoute === '/'
     ? Math.ceil(bookStore.books.length / bookStore.bookPagination.booksPerPage)
@@ -115,35 +116,27 @@ watch(searchTerm, () => {
   bookStore.bookPagination.currentPage = 1;
 });
 
-watch(
-  () => currentRoute,
-  () => {
-    console.log('currentRoute', currentRoute);
-
-    bookStore.bookPagination.currentPage = 1;
-  },
-);
-
 // Pls dont kill me for this :D
 const paginatedBooks = computed(() => {
-  const startIndex =
+  let filteredBooks =
+  currentRoute === '/' ? bookStore.books : bookStore.getFavoriteBooks;
+
+  let startIndex =
     (bookStore.bookPagination.currentPage - 1) *
     bookStore.bookPagination.booksPerPage;
+
+  if (startIndex > filteredBooks.length) {
+    bookStore.bookPagination.currentPage = 1;
+    startIndex = 0;
+  }
+
   const endIndex = startIndex + bookStore.bookPagination.booksPerPage;
-  let filteredBooks =
-    currentRoute === '/' ? bookStore.books : bookStore.getFavoriteBooks;
 
   if (searchTerm.value) {
     filteredBooks = filteredBooks.filter((book) =>
       book.title.toLowerCase().includes(searchTerm.value.toLowerCase()),
     );
   }
-
-  // Update total pages when search term changes
-  // totalPages.value =
-  //   currentRoute === '/'
-  //     ? Math.ceil(filteredBooks.length / bookStore.bookPagination.booksPerPage)
-  //     : Math.ceil( / bookStore.bookPagination.booksPerPage);
 
   return filteredBooks.slice(startIndex, endIndex);
 });

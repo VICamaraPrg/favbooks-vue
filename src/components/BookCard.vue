@@ -20,7 +20,6 @@ import HeartIcon from '@/assets/icons/HeartIcon.vue';
 import TrashIcon from '@/assets/icons/TrashIcon.vue';
 import type { Book } from '@/core/interfaces/Book';
 import { useBookStore } from '@/stores/book-store';
-import { defineProps } from 'vue';
 
 const bookStore = useBookStore();
 
